@@ -10,6 +10,23 @@ package "Diagrama de Polos de Tecnologia no Brasil" #FFFFFF {
     + Área de Atuação
   }
 
+  class Prêmio {
+    + Nome
+    + Ano
+    + Instituição Provedora
+  }
+
+  class Instituição {
+    + Nome
+    + Tipo
+    + Razão Social
+  }
+
+  circle Pública
+  circle Privada
+  circle ONG
+  circle "PPP"
+
   class Localização {
     + Região
     + Estado
@@ -20,14 +37,41 @@ package "Diagrama de Polos de Tecnologia no Brasil" #FFFFFF {
     + Complemento
   }
 
-  class Prêmios {
+  class Funcionário {
     + Nome
-    + Ano
-    + Instituição Provedora
+    + Identificador
+    + Cargo
+    + Salário
+    + Tipo
   }
 
-  "Polo Tecnológico" -> "Localização" : Está em uma
-  "Polo Tecnológico" -> Prêmios : Recebe
+  circle Pesquisador
+  circle Professor
+  circle Tecnólogo
+  circle Gerente
+
+  class Tecnologia {
+    + Nome
+    + Área
+    + Campo do Saber
+  }
+
+  "Polo Tecnológico" "1" --* "1" "Localização" : Fica em
+  "Polo Tecnológico" "many" --* "many" Prêmio : Recebe
+
+  "Polo Tecnológico" "1" --* "many" Instituição : Possui
+  "Instituição" "1" --* "many" Funcionário : Possui
+
+  "Instituição" "1" --* "many" Tecnologia : Desenvolve
+  "Instituição" -> Pública : É
+  "Instituição" -> Privada : É
+  "Instituição" -> ONG : É
+  "Instituição" -> PPP : É
+
+  "Funcionário" -> Pesquisador : É um
+  "Funcionário" -> Tecnólogo : É um
+  "Funcionário" -> Professor : É um
+  "Funcionário" -> Gerente : É um
 }
 @enduml
 ```
