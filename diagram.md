@@ -5,9 +5,14 @@
 ```plantuml
 @startuml
 package "Diagrama de Polos de Tecnologia no Brasil" #FFFFFF {
-  class "Polo Tecnológico" {
+  class "Parque Tecnológico" {
     + Nome
     + Área de Atuação
+  }
+
+  class Infraestrutura {
+    + Investimento
+    + Tipo
   }
 
   class Prêmio {
@@ -20,12 +25,9 @@ package "Diagrama de Polos de Tecnologia no Brasil" #FFFFFF {
     + Nome
     + Tipo
     + Razão Social
+    + Faturamento
+    + Eficiência
   }
-
-  circle Pública
-  circle Privada
-  circle ONG
-  circle "PPP"
 
   class Localização {
     + Região
@@ -43,35 +45,37 @@ package "Diagrama de Polos de Tecnologia no Brasil" #FFFFFF {
     + Cargo
     + Salário
     + Tipo
+    + Gênero
   }
-
-  circle Pesquisador
-  circle Professor
-  circle Tecnólogo
-  circle Gerente
 
   class Tecnologia {
     + Nome
     + Área
     + Campo do Saber
+    + Investimento
   }
 
-  "Polo Tecnológico" "1" --* "1" "Localização" : Fica em
-  "Polo Tecnológico" "many" --* "many" Prêmio : Recebe
+  "Parque Tecnológico" "1" --* "1" "Localização" : Fica em
+  "Parque Tecnológico" "1" --* "many" "Infraestrutura" : Possui
+  "Parque Tecnológico" "many" --* "many" Prêmio : Recebe
 
-  "Polo Tecnológico" "1" --* "many" Instituição : Possui
+  "Parque Tecnológico" "1" --* "many" Instituição : Possui
   "Instituição" "1" --* "many" Funcionário : Possui
 
   "Instituição" "1" --* "many" Tecnologia : Desenvolve
-  "Instituição" -> Pública : É
-  "Instituição" -> Privada : É
-  "Instituição" -> ONG : É
-  "Instituição" -> PPP : É
+  "Instituição" --* Pública : É uma
+  "Instituição" --* Privada : É uma
+  "Instituição" --* ONG : É uma
+  "Instituição" --* PPP : É uma
 
-  "Funcionário" -> Pesquisador : É um
-  "Funcionário" -> Tecnólogo : É um
-  "Funcionário" -> Professor : É um
-  "Funcionário" -> Gerente : É um
+  "Funcionário" --* Pesquisador : É um
+  "Funcionário" --* Tecnólogo : É um
+  "Funcionário" --* Professor : É um
+  "Funcionário" --* Gerente : É um
+
+  Tecnologia --* Método : É um
+  Tecnologia --* Ferramenta : É uma
+  Tecnologia --* Processo: É um
 }
 @enduml
 ```
